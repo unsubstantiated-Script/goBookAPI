@@ -25,6 +25,7 @@ func GetBook(w http.ResponseWriter, r *http.Request) {
 	bookId := vars["bookId"]
 	ID, err := strconv.ParseInt(bookId, 0, 0)
 	if err != nil {
+		fmt.Println(vars)
 		fmt.Println("Error while parsing bookId")
 	}
 	bookDetails, _ := models.GetBookById(ID)
