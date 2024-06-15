@@ -1,8 +1,10 @@
 package config
 
 import (
+	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"goBookAPI/pkg/utils"
 )
 
 var (
@@ -10,7 +12,14 @@ var (
 )
 
 func Connect() {
-	d, err := gorm.Open("mysql", "root:FulF@m2004@/simplerest?charset=utf8&parseTime=True&loc=Local")
+
+	mysqlUser := utils.GoDotEnvVariable("MYSQL_USER")
+	mysqlPassword := utils.GoDotEnvVariable("MYSQL_PASSWORD")
+	mysqlDB := utils.GoDotEnvVariable("MYSQL_DB")
+
+	args := fmt.Sprintf("%s:%s@/%s?charset=utf8&parseTime=True&loc=Local", mysqlUser, mysqlPassword, mysqlDB)
+
+	d, err := gorm.Open("mysql", args)
 	if err != nil {
 		panic(err)
 	}
